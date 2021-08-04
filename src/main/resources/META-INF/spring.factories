@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  ch.admin.bag.covidcertificate.log.rest.RestRequestLogger,\
+  ch.admin.bag.covidcertificate.log.metrics.LoggingMetrics

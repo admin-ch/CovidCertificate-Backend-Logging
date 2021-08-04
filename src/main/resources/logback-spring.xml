@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="app" source="spring.application.name"/>
+    <springProperty scope="context" name="adminEnabled" source="spring.boot.admin.client.enabled"/>
+    <springProperty scope="context" name="adminUrl" source="spring.boot.admin.client.url"/>
+    <springProperty scope="local" name="logrelayHost"
+                    source="jeap.logging.logrelay.host"/>
+    <springProperty scope="local" name="logrelayPort"
+                    source="jeap.logging.logrelay.port"/>
+    <springProperty scope="local" name="asyncAppenderQueueSize"
+                    source="jeap.logging.logrelay.async-queue-size"
+                    defaultValue="512"/>
+    <springProperty scope="local" name="asyncAppenderFallbackThreshold"
+                    source="jeap.logging.logrelay.async-fallback-threshold"
+                    defaultValue="20"/>
+    <springProperty scope="local" name="asyncAppenderMaxFlushTimeMs"
+                    source="jeap.logging.logrelay.max-flush-time-ms"
+                    defaultValue="5000"/>
+
+    <newRule pattern="configuration/appender/fallback/appender-ref"
+             actionClass="ch.qos.logback.core.joran.action.AppenderRefAction"/>
+
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp/>
+                <context/>
+                <loggerName>
+                    <fieldName>logger</fieldName>
+                    <shortenedLoggerNameLength>20</shortenedLoggerNameLength>
+                </loggerName>
+                <logLevel/>
+                <tags/>
+                <threadName/>
+                <mdc/>
+                <arguments/>
+                <sequence/>
+                <logstashMarkers/>
+                <stackHash>
+                    <fieldName>exception-hash</fieldName>
+                </stackHash>
+                <stackTrace>
+                    <fieldName>exception</fieldName>
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <maxDepthPerThrowable>40</maxDepthPerThrowable>
+                        <maxLength>4096</maxLength>
+                        <shortenedClassNameLength>20</shortenedClassNameLength>
+                        <rootCauseFirst>true</rootCauseFirst>
+                        <exclude>sun\.reflect\..*\.invoke.*</exclude>
+                    </throwableConverter>
+                </stackTrace>
+                <message/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <springProfile name="cloud &amp; !logrelay &amp; !logrelay-sync">
+        <root level="INFO">
+            <appender-ref ref="JSON_CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="cloud">
+        <root level="INFO">
+            <if condition='isDefined("adminUrl")'>
+                <then>
+                    <if condition='!property("adminEnabled").trim().equalsIgnoreCase("false")'>
+                        <then>
+                            <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                                <file>log.log</file>
+                                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                                    <fileNamePattern>log.log.%i</fileNamePattern>
+                                    <minIndex>1</minIndex>
+                                    <maxIndex>1</maxIndex>
+                                </rollingPolicy>
+                                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                                    <MaxFileSize>5MB</MaxFileSize>
+                                </triggeringPolicy>
+                                <encoder>
+                                    <charset>UTF-8</charset>
+                                    <Pattern>%d %-5level [${app},%X{X-B3-TraceId:-}] %logger{35} - %msg%n</Pattern>
+                                </encoder>
+                            </appender>
+                        </then>
+                    </if>
+                </then>
+            </if>
+        </root>
+    </springProfile>
+
+    <springProfile name="!cloud &amp; !logrelay &amp; !logrelay-sync">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <charset>UTF-8</charset>
+                <Pattern>%d %highlight(%-5level) [${app},%X{X-B3-TraceId:-}] %cyan(%logger{35}) - %msg%n</Pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="logrelay | logrelay-sync">
+        <appender name="LOGRELAY" class="ch.admin.bag.covidcertificate.log.syslog.TLSSyslogAppender">
+            <syslogHost>${logrelayHost}</syslogHost>
+            <port>${logrelayPort}</port>
+            <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+                <prefix class="ch.admin.bag.covidcertificate.log.syslog.encoder.SyslogMessagePrefixEncoder"/>
+                <providers>
+                    <provider class="ch.admin.bag.covidcertificate.log.cloudfoundry.CloudFoundryAttributeProvider"/>
+                    <provider class="net.logstash.logback.composite.loggingevent.LoggingEventNestedJsonProvider">
+                        <fieldName>msg</fieldName>
+                        <providers>
+                            <timestamp/>
+                            <context/>
+                            <loggerName>
+                                <fieldName>logger</fieldName>
+                                <shortenedLoggerNameLength>20</shortenedLoggerNameLength>
+                            </loggerName>
+                            <logLevel/>
+                            <tags/>
+                            <threadName/>
+                            <mdc/>
+                            <arguments/>
+                            <sequence/>
+                            <logstashMarkers/>
+                            <stackHash>
+                                <fieldName>exception-hash</fieldName>
+                            </stackHash>
+                            <stackTrace>
+                                <fieldName>exception</fieldName>
+                                <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                                    <maxDepthPerThrowable>40</maxDepthPerThrowable>
+                                    <maxLength>4096</maxLength>
+                                    <shortenedClassNameLength>20</shortenedClassNameLength>
+                                    <rootCauseFirst>true</rootCauseFirst>
+                                    <exclude>sun\.reflect\..*\.invoke.*</exclude>
+                                </throwableConverter>
+                            </stackTrace>
+                            <message/>
+                        </providers>
+                    </provider>
+                </providers>
+            </encoder>
+            <fallback>
+                <appender-ref ref="JSON_CONSOLE"/>
+            </fallback>
+        </appender>
+    </springProfile>
+
+    <springProfile name="logrelay &amp; !logrelay-sync">
+        <appender name="ASYNC_LOGRELAY" class="ch.admin.bag.covidcertificate.log.async.AsyncBufferFullFallbackAppender">
+            <queueSize>${asyncAppenderQueueSize}</queueSize>
+            <fallbackThreshold>${asyncAppenderFallbackThreshold}</fallbackThreshold>
+            <maxFlushTime>${asyncAppenderMaxFlushTimeMs}</maxFlushTime>
+            <appender-ref ref="LOGRELAY"/>
+            <fallback>
+                <appender-ref ref="JSON_CONSOLE"/>
+            </fallback>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="ASYNC_LOGRELAY"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="logrelay-sync &amp; !logrelay">
+        <root level="INFO">
+            <appender-ref ref="LOGRELAY"/>
+        </root>
+    </springProfile>
+
+    <!-- The tracking of unused config properties in the kafka client is flawed. The warnings for unknown config
+         properties that are necessary to configure i.e. custom interceptors are thus suppressed here (see https://issues.apache.org/jira/browse/KAFKA-7509 et al).
+    -->
+    <logger name="org.apache.kafka.clients.producer.ProducerConfig" level="ERROR"/>
+    <logger name="org.apache.kafka.clients.consumer.ConsumerConfig" level="ERROR"/>
+    <logger name="org.apache.kafka.clients.admin.AdminClientConfig" level="ERROR"/>
+</configuration>
