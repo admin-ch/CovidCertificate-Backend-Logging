@@ -40,7 +40,7 @@ public class AsyncBufferFullFallbackAppender extends AsyncAppenderBase<ILoggingE
 
     /**
      * Append a log event asynchronously, falling back to the fallback appender if
-     * <code>getRemainingCapacity() <= fallbackThreshold</code>
+     * <code>getRemainingCapacity() &lt;= fallbackThreshold</code>
      */
     @Override
     protected void append(ILoggingEvent eventObject) {

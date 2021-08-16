@@ -1,0 +1,33 @@
+# This workflow will build a Java project with Maven when a tag is pushed
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+---
+name: Java CI with Maven
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+    - run: echo "TAG=$(echo "$GITHUB_REF" | awk -F / '{print $3}' | sed 's/^v//g')" >> $GITHUB_ENV
+      shell: bash
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11.0.7
+        server-id: ossrh # Value of the distributionManagement/repository/id field of the pom.xml
+        server-username: MAVEN_USERNAME # env variable for username in deploy
+        server-password: MAVEN_CENTRAL_TOKEN # env variable for token in deploy
+        gpg-private-key: ${secrets.GPGPRIVATEKEY} # Value of the GPG private key to import
+        gpg-passphrase: MAVEN_GPG_PASSPHRASE # env variable for GPG private key passphrase
+    - name: Update Version
+      run: |
+        mvn versions:set -DnewVersion=$TAG
+        mvn versions:commit
+    - name: Deploy
+      run: |
+        mvn deploy
