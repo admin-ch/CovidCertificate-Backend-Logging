@@ -29,5 +29,9 @@ jobs:
         mvn versions:set -DnewVersion=$TAG
         mvn versions:commit
     - name: Deploy
+      env:
+        MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+        MAVEN_CENTRAL_TOKEN: ${{ secrets.MAVEN_CENTRAL_TOKEN }}
+        GPG_PASSPHRASE: ${{ MAVEN_GPG_PASSPHRASE }}
       run: |
         mvn deploy
