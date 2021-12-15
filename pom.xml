@@ -142,6 +142,8 @@
         <spring-context.version>5.3.13</spring-context.version>
         <spring-webflux.version>5.3.13</spring-webflux.version>
 
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <delombok.output>target/delombok</delombok.output>
         <log4j2.version>2.16.0</log4j2.version>
     </properties>
 
