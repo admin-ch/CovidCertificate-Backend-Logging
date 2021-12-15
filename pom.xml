@@ -6,28 +6,7 @@
 
     <groupId>ch.admin.bag.covidcertificate</groupId>
     <artifactId>cc-backend-logging</artifactId>
-    <version>0.0.0</version>
-    <url>https://github.com/admin-ch/CovidCertificate-Backend-Logging</url>
-    <licenses>
-        <license>
-            <name>The MIT License</name>
-            <url>https://raw.githubusercontent.com/admin-ch/CovidCertificate-Backend-Logging/master/LICENSE</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <id>foitt</id>
-            <organization>Bundesamt für Informatik und Telekommunikation</organization>
-            <organizationUrl>https://www.bit.admin.ch/</organizationUrl>
-        </developer>
-    </developers>
-    <scm>
-        <connection>scm:git:git://github.com:admin-ch/CovidCertificate-Backend-Logging.git</connection>
-        <developerConnection>scm:git:git://github.com:admin-ch/CovidCertificate-Backend-Logging.git</developerConnection>
-        <url>https://github.com/admin-ch/CovidCertificate-Backend-Logging</url>
-        <tag>HEAD</tag>
-    </scm>
+    <version>1.0.1</version>
     <build>
         <plugins>
             <plugin>
@@ -39,87 +18,6 @@
                     <target>11</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok-maven-plugin</artifactId>
-                <version>${lombok.version}.0</version>
-                <configuration>
-                    <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-                    <outputDirectory>${delombok.output}</outputDirectory>
-                    <addOutputDirectory>false</addOutputDirectory>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>delombok</goal>
-                        </goals>
-                        
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
-                <configuration>
-                    <source>8</source>
-                    <sourcepath>${delombok.output}</sourcepath>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
-                <configuration>
-                    <!-- Prevent gpg from using pinentry programs -->
-                    <gpgArguments>
-                        <arg>--pinentry-mode</arg>
-                        <arg>loopback</arg>
-                    </gpgArguments>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -129,19 +27,19 @@
     <properties>
         <java.version>11</java.version>
 
-        <logstash.version>5.2</logstash.version>
-        <janino.version>3.1.0</janino.version>
-        <commons.version>3.10</commons.version>
-        <spring-boot.version>2.4.6</spring-boot.version>
-        <micrometer.version>1.7.0</micrometer.version>
-        <logback.version>1.2.3</logback.version>
-        <aspectjweaver.version>1.9.6</aspectjweaver.version>
-        <spring-webflux.version>5.3.8</spring-webflux.version>
-        <jakarta.version>1.3.5</jakarta.version>
-        <lombok.version>1.18.20</lombok.version>
-        <spring-context.version>5.3.7</spring-context.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <delombok.output>target/delombok</delombok.output>
+        <aspectjweaver.version>1.9.7</aspectjweaver.version>
+        <jakarta.version>2.0.0</jakarta.version>
+        <janino.version>3.1.6</janino.version>
+        <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
+        <logback.version>1.2.7</logback.version>
+        <logstash.version>6.6</logstash.version>
+        <lombok.version>1.18.22</lombok.version>
+        <micrometer.version>1.8.0</micrometer.version>
+        <spring-boot.version>2.6.1</spring-boot.version>
+        <spring-context.version>5.3.13</spring-context.version>
+        <spring-webflux.version>5.3.13</spring-webflux.version>
+
+        <log4j2.version>2.16.0</log4j2.version>
     </properties>
 
     <dependencies>
@@ -203,7 +101,6 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
-        
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
@@ -227,6 +124,11 @@
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectjweaver.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>${javax.annotation-api.version}</version>
         </dependency>
     </dependencies>
 </project>
