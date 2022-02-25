@@ -6,7 +6,7 @@
 
     <groupId>ch.admin.bag.covidcertificate</groupId>
     <artifactId>cc-backend-logging</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <url>https://github.com/admin-ch/CovidCertificate-Backend-Logging</url>
 
     <licenses>
@@ -138,7 +138,7 @@
         <logstash.version>6.6</logstash.version>
         <lombok.version>1.18.20</lombok.version>
         <micrometer.version>1.8.0</micrometer.version>
-        <spring-boot.version>2.4.13</spring-boot.version>
+        <spring-boot.version>2.5.7</spring-boot.version>
         <spring-context.version>5.3.13</spring-context.version>
         <spring-webflux.version>5.3.13</spring-webflux.version>
 
