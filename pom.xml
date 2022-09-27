@@ -6,7 +6,7 @@
 
     <groupId>ch.admin.bag.covidcertificate</groupId>
     <artifactId>cc-backend-logging</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <url>https://github.com/admin-ch/CovidCertificate-Backend-Logging</url>
 
     <licenses>
@@ -130,21 +130,21 @@
     <properties>
         <java.version>11</java.version>
 
-        <aspectjweaver.version>1.9.7</aspectjweaver.version>
-        <jakarta.version>2.0.0</jakarta.version>
-        <janino.version>3.1.6</janino.version>
+        <aspectjweaver.version>1.9.9.1</aspectjweaver.version>
+        <jakarta.version>2.1.0</jakarta.version>
+        <janino.version>3.1.8</janino.version>
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
-        <logback.version>1.2.7</logback.version>
-        <logstash.version>6.6</logstash.version>
+        <logback.version>1.4.1</logback.version>
+        <logstash.version>7.2</logstash.version>
         <lombok.version>1.18.20</lombok.version>
-        <micrometer.version>1.8.0</micrometer.version>
-        <spring-boot.version>2.5.7</spring-boot.version>
-        <spring-context.version>5.3.13</spring-context.version>
-        <spring-webflux.version>5.3.13</spring-webflux.version>
+        <micrometer.version>1.9.4</micrometer.version>
+        <spring-boot.version>2.7.3</spring-boot.version>
+        <spring-context.version>5.3.23</spring-context.version>
+        <spring-webflux.version>5.3.23</spring-webflux.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <delombok.output>target/delombok</delombok.output>
-        <log4j2.version>2.16.0</log4j2.version>
+        <log4j2.version>2.18.0</log4j2.version>
     </properties>
 
     <dependencies>
