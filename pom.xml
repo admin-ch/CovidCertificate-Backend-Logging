@@ -6,7 +6,7 @@
 
     <groupId>ch.admin.bag.covidcertificate</groupId>
     <artifactId>cc-backend-logging</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <url>https://github.com/admin-ch/CovidCertificate-Backend-Logging</url>
 
     <licenses>
@@ -34,16 +34,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.10.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <release>17</release>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
+                <version>3.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -75,7 +74,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>3.4.1</version>
                 <configuration>
                     <source>8</source>
                     <sourcepath>${delombok.output}</sourcepath>
@@ -92,7 +91,7 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
+                <version>1.6.13</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
@@ -103,7 +102,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <version>3.0.1</version>
                 <configuration>
                     <!-- Prevent gpg from using pinentry programs -->
                     <gpgArguments>
@@ -128,23 +127,23 @@
     <description>Internal used Library with distributed logging.</description>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
 
         <aspectjweaver.version>1.9.9.1</aspectjweaver.version>
-        <jakarta.version>2.1.0</jakarta.version>
-        <janino.version>3.1.8</janino.version>
+        <jakarta.version>2.1.1</jakarta.version>
+        <janino.version>3.1.9</janino.version>
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
         <logback.version>1.4.1</logback.version>
         <logstash.version>7.2</logstash.version>
         <lombok.version>1.18.20</lombok.version>
-        <micrometer.version>1.9.4</micrometer.version>
-        <spring-boot.version>2.7.3</spring-boot.version>
-        <spring-context.version>5.3.23</spring-context.version>
-        <spring-webflux.version>5.3.23</spring-webflux.version>
+        <micrometer.version>1.10.2</micrometer.version>
+        <spring-boot.version>2.7.5</spring-boot.version>
+        <spring-context.version>5.3.24</spring-context.version>
+        <spring-webflux.version>5.3.24</spring-webflux.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <delombok.output>target/delombok</delombok.output>
-        <log4j2.version>2.18.0</log4j2.version>
+        <log4j2.version>2.19.0</log4j2.version>
     </properties>
 
     <dependencies>
