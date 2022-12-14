@@ -110,7 +110,7 @@ public class TLSSyslogConnection {
             clientSocket.startHandshake();
             clientSocket.setKeepAlive(true);
             this.clientSocket = clientSocket;
-            onConnectionSuccesful();
+            onConnectionSuccessful();
         } catch (Exception ex) {
             disconnect();
             onConnectionError(ex);
@@ -123,7 +123,7 @@ public class TLSSyslogConnection {
         clientSocket = null;
     }
 
-    private void onConnectionSuccesful() {
+    private void onConnectionSuccessful() {
         connectionState.notifyConnected();
         LoggingMetrics.incrementDistributedLogConnectionEstablished();
         if (!connectionLoggedOnce) {
