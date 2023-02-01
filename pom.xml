@@ -6,7 +6,7 @@
 
     <groupId>ch.admin.bag.covidcertificate</groupId>
     <artifactId>cc-backend-logging</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <url>https://github.com/admin-ch/CovidCertificate-Backend-Logging</url>
 
     <licenses>
@@ -76,7 +76,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.4.1</version>
                 <configuration>
-                    <source>8</source>
+                    <source>17</source>
                     <sourcepath>${delombok.output}</sourcepath>
                 </configuration>
                 <executions>
@@ -137,9 +137,9 @@
         <logstash.version>7.2</logstash.version>
         <lombok.version>1.18.20</lombok.version>
         <micrometer.version>1.10.2</micrometer.version>
-        <spring-boot.version>2.7.5</spring-boot.version>
-        <spring-context.version>5.3.24</spring-context.version>
-        <spring-webflux.version>5.3.24</spring-webflux.version>
+        <spring-boot.version>2.7.8</spring-boot.version>
+        <spring-context.version>5.3.25</spring-context.version>
+        <spring-webflux.version>5.3.25</spring-webflux.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <delombok.output>target/delombok</delombok.output>
